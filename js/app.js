@@ -232,5 +232,6 @@ function loadShader(gl, type, source) {
     return null;
   }
 
+//
   return shader;
 }

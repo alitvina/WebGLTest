@@ -4,13 +4,13 @@ main();
 // Start here
 //
 function main() {
-  const canvas = document.querySelector("#canvas");
-  const gl = canvas.getContext("webgl");   // initialize GL context
+  const canvas = document.querySelector('#canvas');
+  const gl = canvas.getContext('webgl');   // initialize GL context
 
   // Only continue if WebGl is available and working
 
   if(!gl) {
-    alert("Unable to initialize WebGL. Your browser or machine may not support it.");
+    alert('Unable to initialize WebGL. Your browser or machine may not support it.');
     return;
   }
 
@@ -132,7 +132,7 @@ function drawScene(gl, programInfo, buffers) {
                    zNear,
                    zFar);
 
-  // Set the drawing position to the "Identity" point (center of the scene)
+  // Set the drawing position to the 'Identity' point (center of the scene)
   //
   const modelViewMatrix = mat4.create();
 
@@ -202,7 +202,7 @@ function initShaderProgram(gl, vsSource, fsSource) {
   // If creating shader program failed
 
   if(!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-    alert("Unable to initialize the shader program: " + gl.getProgramInfoLog(shaderProgram));
+    alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
     return null;
   }
 
@@ -225,9 +225,9 @@ function loadShader(gl, type, source) {
   gl.compileShader(shader);
 
   // See if compiled successfully
-  
+
   if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    alert("An error has occured compiling the shaders: " + gl.getShaderInfoLog(shader));
+    alert('An error has occured compiling the shaders: ' + gl.getShaderInfoLog(shader));
     gl.deleteShader(shader);
     return null;
   }

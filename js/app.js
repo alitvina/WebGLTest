@@ -8,7 +8,6 @@ main();
 function main() {
   const canvas = document.querySelector('#canvas');
   const gl = canvas.getContext('webgl');
-
   // If we don't have a GL context, give up now
 
   if (!gl) {
@@ -202,6 +201,8 @@ function initBuffers(gl) {
 // Draw the scene.
 //
 function drawScene(gl, programInfo, buffers, deltaTime) {
+  resize(canvas);
+  gl.viewport(0, 0, canvas.width, canvas.height);
   gl.clearColor(1.0, 1.0, 1.0, 1.0);  // Clear to black, fully opaque
   gl.clearDepth(1.0);                 // Clear everything
   gl.enable(gl.DEPTH_TEST);           // Enable depth testing
@@ -241,7 +242,7 @@ function drawScene(gl, programInfo, buffers, deltaTime) {
 
   mat4.translate(modelViewMatrix,     // destination matrix
                  modelViewMatrix,     // matrix to translate
-                 [-0.0, 0.0, -6.0]);  // amount to translate
+                 [0.0, 0.0, -20.0]);  // amount to translate
 
   mat4.rotate(modelViewMatrix,
               modelViewMatrix,
@@ -370,4 +371,19 @@ function loadShader(gl, type, source) {
   }
 
   return shader;
+}
+
+function resize(canvas) {
+  // Lookup the size the browser is displaying the canvas.
+  var displayWidth  = canvas.clientWidth;
+  var displayHeight = canvas.clientHeight;
+
+  // Check if the canvas is not the same size.
+  if (canvas.width  != displayWidth ||
+      canvas.height != displayHeight) {
+
+    // Make the canvas the same size
+    canvas.width  = displayWidth;
+    canvas.height = displayHeight;
+  }
 }

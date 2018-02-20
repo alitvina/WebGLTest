@@ -46,9 +46,9 @@ function main() {
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
 
   // Collect all the info needed to use the shader program.
-  // Look up which attribute our shader program is using
-  // for aVertexPosition and look up uniform locations.
-
+  // Look up which attributes our shader program is using
+  // for aVertexPosition, aVevrtexColor and also
+  // look up uniform locations.
   const programInfo = {
     program: shaderProgram,
     attribLocations: {
@@ -94,14 +94,15 @@ function initBuffers(gl) {
      1.0, -1.0,
     -1.0, -1.0,
   ];
+
   // Now pass the list of positions into WebGL to build the
   // shape. We do this by creating a Float32Array from the
   // JavaScript array, then use it to fill the current buffer.
 
-  gl.bufferData(gl.ARRAY_BUFFER,
-                new Float32Array(positions),
-                gl.STATIC_DRAW);
-                
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+  // Now set up the colors for the vertices
+
   const colors = [
     1.0,  1.0,  1.0,  1.0,    // white
     1.0,  0.0,  0.0,  1.0,    // red
@@ -111,10 +112,7 @@ function initBuffers(gl) {
 
   const colorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER,
-                new Float32Array(colors),
-                gl.STATIC_DRAW);
-
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 
   return {
     position: positionBuffer,
@@ -168,7 +166,7 @@ function drawScene(gl, programInfo, buffers) {
                  [-0.0, 0.0, -6.0]);  // amount to translate
 
   // Tell WebGL how to pull out the positions from the position
-  // buffer into the vertexPosition attribute.
+  // buffer into the vertexPosition attribute
   {
     const numComponents = 2;
     const type = gl.FLOAT;
@@ -185,8 +183,10 @@ function drawScene(gl, programInfo, buffers) {
         offset);
     gl.enableVertexAttribArray(
         programInfo.attribLocations.vertexPosition);
-  };
+  }
 
+  // Tell WebGL how to pull out the colors from the color buffer
+  // into the vertexColor attribute.
   {
     const numComponents = 4;
     const type = gl.FLOAT;
